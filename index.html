@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Firebase Web</title>
+</head>
+
+<body>
+    <a href="queries.html"> Query</a>
+    <div>
+        <h1>Connected to Firestore</h1>
+        <button id="loadDataBtn">Show all documents in console</button>
+    </div>
+
+    <div>
+        <h1>Add student to the database</h1>
+
+        <label for="docId">Student Code:</label>
+        <input type="text" id="docId" placeholder="Ej: 30003625"><br><br>
+
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" placeholder="Ej: Sergio"><br><br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" placeholder="Ej: Reyes"><br><br>
+
+        <label for="nickname">Nickname:</label>
+        <input type="text" id="nickname" placeholder="Ej: Profe"><br><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" placeholder="Ej: 18"><br><br>
+
+        <button id="addDocBtn">Add Student</button>
+    </div>
+    <div>
+        <h1>Get student by id</h1>
+
+        <label for="getDocId">Student Code:</label>
+        <input type="text" id="getDocId" placeholder="Ej: 30003625"><br><br>
+
+        <button id="getDocBtn">Get Student</button>
+    </div>
+
+    <script type="module">
+        import { FirestoreService } from './modules/firestore_service.js';
+
+        const firestore = new FirestoreService("2025-I");
+
+        document.getElementById("loadDataBtn").addEventListener("click", async () => {
+            const docs = await firestore.getAllDocuments();
+            console.log("Obtained Docs:", docs);
+        });
+
+        document.getElementById("addDocBtn").addEventListener("click", async () => {
+            const docId = document.getElementById("docId").value.trim();
+            const firstName = document.getElementById("firstName").value.trim();
+            const lastName = document.getElementById("lastName").value.trim();
+            const nickname = document.getElementById("nickname").value.trim();
+            const ageValue = document.getElementById("age").value;
+            const age = ageValue ? parseInt(ageValue) : null;
+
+            if (!docId || !firstName || !lastName) {
+                alert("Fill in the required fields: Document ID, First Name and Last Name.");
+                return;
+            }
+
+            const data = {
+                firstName,
+                lastName,
+                nickname,                    
+                age: isNaN(age) ? null : age 
+            };
+
+            await firestore.PostDocument(docId, data);
+        });
+
+        document.getElementById("getDocBtn").addEventListener("click", async () => {
+            const docId = document.getElementById("getDocId").value.trim();
+
+            if (!docId) {
+                alert("The student id is needed");
+                return;
+            }
+            const doc = await firestore.getDocumentById(docId);
+            console.log(doc);
+        });
+    </script>
+</body>
+
+</html>

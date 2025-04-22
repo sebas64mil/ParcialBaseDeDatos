@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Firebase Web</title>
+</head>
+
+<body>
+    <h1>Firestore Query Tester</h1>
+
+    <div>
+        <h2>Where Queries (Multiple)</h2>
+        <div id="filtersContainer">
+            <div class="filter">
+                <input type="text" placeholder="Column" class="filterColumn">
+                <input type="text" placeholder="Comparator (==, >, <, etc)" class="filterComparator">
+                <input type="text" placeholder="Value" class="filterValue">
+            </div>
+        </div>
+        <button id="addFilterBtn">Add Filter</button><br><br>
+        <button id="multiWhereQueryBtn">Run Combined Query</button>
+    </div>
+    <hr>
+
+    <div>
+        <h2>Order + Limit</h2>
+        <label for="orderColumn">Order by:</label>
+        <input type="text" id="orderColumn" placeholder="price"><br><br>
+
+        <label for="orderDir">Direction:</label>
+        <select id="orderDir">
+            <option value="asc">Asc</option>
+            <option value="desc">Desc</option>
+        </select><br><br>
+
+        <label for="limitNum">Limit:</label>
+        <input type="number" id="limitNum" value="5"><br><br>
+
+        <button id="orderLimitQueryBtn">Run Order + Limit Query</button>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Prefix Search</h2>
+        <label for="prefixColumn">Column:</label>
+        <input type="text" id="prefixColumn" placeholder="name"><br><br>
+
+        <label for="prefixValue">Starts with:</label>
+        <input type="text" id="prefixValue" placeholder="Sam"><br><br>
+
+        <button id="prefixQueryBtn">Run Prefix Search</button>
+    </div>
+
+    <hr>
+
+    <div>
+        <h2>Results</h2>
+        <pre id="results"></pre>
+    </div>
+
+    <script type="module">
+        import { FirestoreQuery } from './modules/firestore_query.js';
+
+        const firestore = new FirestoreQuery("2025-I");
+
+        const displayResults = (docs) => {
+            const resultsEl = document.getElementById("results");
+            if (!docs || docs.length === 0) {
+                resultsEl.textContent = "No documents found.";
+                return;
+            }
+
+            resultsEl.textContent = JSON.stringify(docs, null, 2);
+        };
+
+        // Add fields to filter
+        document.getElementById("addFilterBtn").addEventListener("click", () => {
+            console.log("Add field clicked")
+            const container = document.getElementById("filtersContainer");
+            const div = document.createElement("div");
+            div.classList.add("filter");
+
+            div.innerHTML = `
+                <input type="text" placeholder="Column" class="filterColumn">
+                <input type="text" placeholder="Comparator (==, >, <, etc)" class="filterComparator">
+                <input type="text" placeholder="Value" class="filterValue">
+                `;
+
+            container.appendChild(div);
+        });
+
+        // Multi query
+        document.getElementById("multiWhereQueryBtn").addEventListener("click", async () => {
+            const filterDivs = document.querySelectorAll("#filtersContainer .filter");
+            const filters = [];
+
+            filterDivs.forEach(div => {
+                const column = div.querySelector(".filterColumn").value.trim();
+                const comparison = div.querySelector(".filterComparator").value.trim();
+                const valueRaw = div.querySelector(".filterValue").value.trim();
+
+                if (column && comparison) {
+                    const value = isNaN(valueRaw) ? valueRaw : Number(valueRaw);
+                    filters.push({ column, comparison, value });
+                }
+            });
+
+            const docs = await firestore.combinedQuery(filters);
+            displayResults(docs);
+        });
+
+        // Order + Limit Query
+        document.getElementById("orderLimitQueryBtn").addEventListener("click", async () => {
+            const column = document.getElementById("orderColumn").value.trim();
+            const direction = document.getElementById("orderDir").value;
+            const limitNum = parseInt(document.getElementById("limitNum").value, 10);
+
+            const docs = await firestore.combinedQuery([], { column, direction }, limitNum);
+            displayResults(docs);
+        });
+
+        // Prefix Search
+        document.getElementById("prefixQueryBtn").addEventListener("click", async () => {
+            const column = document.getElementById("prefixColumn").value.trim();
+            const prefix = document.getElementById("prefixValue").value.trim();
+
+            const docs = await firestore.prefixSearch(column, prefix);
+            displayResults(docs);
+        });
+    </script>
+</body>
+
+</html>
