@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Firebase Web</title>
 </head>
 
@@ -45,11 +46,17 @@
     <script type="module">
         import { FirestoreService } from './modules/firestore_service.js';
 
-        const firestore = new FirestoreService("2025-I");
+
+
+
+        const firestore = new FirestoreService("teams/dpZaC52gxG1iCsirzJ9W/projects/McdQsPnFxUaN1QHDU9vA/Homeworks");
+
 
         document.getElementById("loadDataBtn").addEventListener("click", async () => {
             const docs = await firestore.getAllDocuments();
+            const docwithId = await firestore.getDocumentById("Tasks1"); 
             console.log("Obtained Docs:", docs);
+            console.log("Obtained Doc with ID:", docwithId);
         });
 
         document.getElementById("addDocBtn").addEventListener("click", async () => {

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>partial No sql</title>
+</head>
+<body>
+    <div>  
+       <h1> add tasks</h1>
+
+       <label for="docId">IdTasks:</label>
+       <input type="text" id="docIdTaks" placeholder="Ej: 1"><br><br>
+
+       <label for="docId">IdProjects:</label>
+       <input type="text" id="docIdProjects" placeholder="Ej: McdQsPnFxUaN1QHDU9vA"><br><br>
+
+       <label for="docId">IdTeams:</label>
+       <input type="text" id="docIdTeams"placeholder="Ej: dpZaC52gxG1iCsirzJ9W"><br><br>
+
+       <label for="docId">Name User:</label>
+       <input type="text" id="docNameTaks" placeholder="Ej: carlos"><br><br>
+              
+       <label for="docId">Prority:</label>
+       <input type="text" id="docPriority" placeholder="Ej: High"><br><br>
+              
+       <label for="docId">Status:</label>
+       <input type="text" id="docStatus" placeholder="Ej: pending"><br><br>
+              
+       <label for="createdAt">Fecha y hora de creación:</label>
+       <input type="datetime-local" id="createdAt" name="createdAt"><br><br>
+
+       <button id="addDocBtn">Add Tarea</button>
+
+    </div>
+
+
+    
+
+
+
+    <div>
+        <h1>Display specific document from the database</h1>
+        <label for="docId">IdTasks:</label>
+        <input type="text" id="docIdTaks2" placeholder="Ej: 1"><br><br>
+ 
+        <label for="docId">IdProjects:</label>
+        <input type="text" id="docIdProjects2" placeholder="Ej: McdQsPnFxUaN1QHDU9vA"><br><br>
+ 
+        <label for="docId">IdTeams:</label>
+        <input type="text" id="docIdTeams2"placeholder="Ej: dpZaC52gxG1iCsirzJ9W"><br><br>
+
+
+        <button id="loadDataBtn">Click for show the tasks</button>
+
+        <section id="containDocsDataBase"></section>
+    </div>
+
+
+    <div>
+        <h2>Order + Limit</h2>
+        <label for="orderColumn">Order by:</label>
+        <input type="text" id="orderColumn" placeholder="price"><br><br>
+
+        <label for="orderDir">Direction:</label>
+        <select id="orderDir">
+            <option value="asc">Asc</option>
+            <option value="desc">Desc</option>
+        </select><br><br>
+
+        <label for="limitNum">Limit:</label>
+        <input type="number" id="limitNum" value="5"><br><br>
+
+        <button id="orderLimitQueryBtn">Run Order + Limit Query</button>
+    </div>
+
+
+    <script type="module" src="./JsPartial/LogicPartial.js"></script>
+</body>
+</html>

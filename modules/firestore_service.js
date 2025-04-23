@@ -2,21 +2,23 @@ import { db } from './firebase_init.js';
 import { collection, getDocs, getDoc, addDoc, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 export class FirestoreService {
-  constructor(collectionName) {
-    this.collectionRef = collection(db, collectionName);
+  constructor(collectionName, documentId) {
+    this.collectionTeams = collection(db, collectionName);
+   
   }
 
   async getAllDocuments() {
-    const snapshot = await getDocs(this.collectionRef);
+    const snapshot = await getDocs(this.collectionTeams);
     const data = [];
     snapshot.forEach((doc) => {
       data.push({ id: doc.id, ...doc.data() });
+
     });
     return data;
   }
 
   async getDocumentById(id) {
-    const docRef = doc(this.collectionRef, id);
+    const docRef = doc(this.collectionTeams, id);
     const snapshot = await getDoc(docRef);
   
     if (snapshot.exists()) {
@@ -29,7 +31,7 @@ export class FirestoreService {
   async PostDocument(customId, dataObject) {
     try {
       console.log(customId, dataObject);
-      const docRef = doc(this.collectionRef, customId.toString());
+      const docRef = doc(this.collectionTeams, customId.toString());
       await setDoc(docRef, dataObject);
       console.log("Documento creado con ID:", customId);
       alert("Documento creado con éxito.");
@@ -38,5 +40,7 @@ export class FirestoreService {
       alert("Error al crear el documento.");
     }
   }
+
+
   
 }

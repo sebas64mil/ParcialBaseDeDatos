@@ -5,6 +5,7 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.1/firebase
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+/*
 const firebaseConfig = {
   apiKey: "AIzaSyBBgoWaCd6APngiq3Jv-d4abmByqZyFxJ8",
   authDomain: "db-multimedia.firebaseapp.com",
@@ -12,7 +13,19 @@ const firebaseConfig = {
   storageBucket: "db-multimedia.firebasestorage.app",
   messagingSenderId: "703694156223",
   appId: "1:703694156223:web:cd702f775e4417841db10a"
+};*/
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCWU2yHzZZ4M5GnxeAA6aOKSH_1_wPTS10",
+  authDomain: "parcialbd-200bf.firebaseapp.com",
+  projectId: "parcialbd-200bf",
+  storageBucket: "parcialbd-200bf.firebasestorage.app",
+  messagingSenderId: "239586485576",
+  appId: "1:239586485576:web:4c236fb244fbff52f3bf7d"
 };
+
+
 
 
 // Initialize Firebase
