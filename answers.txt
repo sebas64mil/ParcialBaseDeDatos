@@ -1,0 +1,9 @@
+
+1)
+Nesting tasks within projects is ideal when queries always depend on the project (e.g., displaying all tasks for a specific project).
+
+However, it becomes inefficient when you need to perform cross-project queries, such as “all tasks assigned to John” regardless of which project they belong to.
+
+4)
+
+The query fails because Firestore requires a composite index when multiple filters are used, or when a filter is combined with an orderBy clause — for example, filtering by "priority" and "status" and ordering by "createdAt". Firestore needs this kind of index to efficiently search and sort the data. If there isn’t an existing index that combines those fields, the query cannot run. To fix this, a composite index must be created that includes the fields used in the filters and orderBy, in the same order. Additionally, a composite index can be reused for other queries as long as they use the same fields in the same order, or a subset of them starting from the first field, but not if the order or fields change.
