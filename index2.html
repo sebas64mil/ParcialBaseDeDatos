@@ -34,11 +34,6 @@
 
     </div>
 
-
-    
-
-
-
     <div>
         <h1>Display specific document from the database</h1>
         <label for="docId">IdTasks:</label>
@@ -58,21 +53,37 @@
 
 
     <div>
-        <h2>Order + Limit</h2>
-        <label for="orderColumn">Order by:</label>
-        <input type="text" id="orderColumn" placeholder="price"><br><br>
+        <h2>Where Queries (Multiple)</h2>
 
-        <label for="orderDir">Direction:</label>
-        <select id="orderDir">
-            <option value="asc">Asc</option>
-            <option value="desc">Desc</option>
-        </select><br><br>
+        <label for="docId">IdProjects:</label>
+        <input type="text" id="docIdProjects3" placeholder="Ej: McdQsPnFxUaN1QHDU9vA"><br><br>
+ 
+        <label for="docId">IdTeams:</label>
+        <input type="text" id="docIdTeams3"placeholder="Ej: dpZaC52gxG1iCsirzJ9W"><br><br>
 
-        <label for="limitNum">Limit:</label>
-        <input type="number" id="limitNum" value="5"><br><br>
 
-        <button id="orderLimitQueryBtn">Run Order + Limit Query</button>
+        <div id="filtersContainer">
+            <div class="filter">
+                <input type="text" placeholder="Column" class="filterColumn">
+                <input type="text" placeholder="Comparator (==, >, <, etc)" class="filterComparator">
+                <input type="text" placeholder="Value" class="filterValue">
+            </div>
+        </div>
+        <button id="addFilterBtn">Add Filter</button><br><br>
+
+
+        <button id="multiWhereQueryBtn">Run Combined Query</button>
+        <button id="containQuery">Contain docPriority</button>
     </div>
+    <hr>
+    <div>
+
+        <div>
+            <h2>Results</h2>
+            <pre id="results"></pre>
+        </div>
+
+    <hr>
 
 
     <script type="module" src="./JsPartial/LogicPartial.js"></script>
